@@ -66,7 +66,7 @@ export function draw_scatt(data, g, filter) {
   //產生xylabel
   const yAxisCall = d3.axisLeft(yscale);
   const xAxisCall = d3.axisBottom(xscale);
-
+  //generate the box of the char
   g.append("g").call(yAxisCall);
   g.append("g")
     .call(xAxisCall)
@@ -74,15 +74,14 @@ export function draw_scatt(data, g, filter) {
 
  // makesure the text is remove
   g.selectAll("text").remove();
-
-
- 
+  //legendLinear generate
   g.select(".legendLinear").call(legendLinear);
   g.append("g")
     .selectAll("dot")
     .data(data)
     .enter()
     .append("circle")
+    // circle size of the 
     .attr("cx", function (d) {
       return xscale(d.umapX);
     })
