@@ -4,5 +4,9 @@ venv/
 #*.jpg
 static/tmp.jpg
 *.pyc
+<<<<<<< HEAD
 *.json
 *.csv
+=======
+*.csv
+>>>>>>> master
