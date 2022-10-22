@@ -15,9 +15,9 @@ export function draw_scatt(data, g, filter) {
     .text("umapX");
   // yscale
   const yscale = d3
-  .scaleLinear()
-  .domain([d3.min(data, (d) => d.umapY), d3.max(data, (d) => d.umapY)])
-  .range([HEIGHT, 0]);
+    .scaleLinear()
+    .domain([d3.min(data, (d) => d.umapY), d3.max(data, (d) => d.umapY)])
+    .range([HEIGHT, 0]);
   //xscale
   const xscale = d3
     .scaleLinear()
@@ -35,6 +35,26 @@ export function draw_scatt(data, g, filter) {
     .scaleThreshold()
     .domain([1, 2, 3])
     .range(["green", "red", "blue"]);
+  // legendColor
+  const circle = d3.symbol().type(d3.symbolCircle)();
+
+  const legendboard = d3
+    .scaleOrdinal()
+    .domain(["reb", "pts", "ast",'r:avg'])
+    .range(["green", "red", "blue",'white']);
+
+  g.append("g")
+    .attr("class", "legendLinear")
+    .attr("transform", "translate(13,20)");
+  
+  const legendLinear = d3
+    .legendColor()
+    .shape("path",circle)
+    .orient("vertical")
+    .scale(legendboard);
+
+ 
+
   // Y label
   g.append("text")
     .attr("x", -(HEIGHT / 2))
@@ -51,7 +71,13 @@ export function draw_scatt(data, g, filter) {
   g.append("g")
     .call(xAxisCall)
     .attr("transform", "translate(0," + HEIGHT + ")");
+
+ // makesure the text is remove
   g.selectAll("text").remove();
+
+
+ 
+  g.select(".legendLinear").call(legendLinear);
   g.append("g")
     .selectAll("dot")
     .data(data)
