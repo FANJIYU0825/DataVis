@@ -1,14 +1,56 @@
 
+import {drawUsa} from './drawmap.js'
+// import {frame_init} from './init.js'
+import {draw_scatt} from './drawscatter.js'
+import {draw_histamgram} from './drawHitogram.js'
 
+const FWith = 800,
+FHeight = 400;
+const FLeftTopX = 10,
+FLeftTopY = 10;
+const MARGIN = { LEFT: 100, RIGHT: 10, TOP: 10, BOTTOM: 100 };
+const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
+const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
+const svg1 = d3
+  .select("#scatter")
+  .append("svg")
+  .attr("width", FWith - 300)
+  .attr("height", FHeight);
+
+const g1 = svg1
+  .append("g")
+  .attr(
+    "transform",
+    `translate(${FLeftTopX + MARGIN.LEFT}, ${FLeftTopY + MARGIN.TOP})`
+  );
+
+function frame_init(area) {
+    const svg = d3
+      .select("#" + area + "")
+      .append("svg")
+      .attr("width", 300)
+      .attr("height", FHeight);
+  
+    const g = svg
+      .append("g")
+      .attr(
+        "transform",
+        `translate(${FLeftTopX + MARGIN.LEFT}, ${
+          FLeftTopY + MARGIN.TOP
+        })scale(.7,.7)`
+      );
+    return g;
+  }
+  
 d3.csv("data/NBA.csv", d3.autoType).then(function (data) {
   d3.json("https://gist.githubusercontent.com/FANJIYU0825/11c93f8bf083adf57ed4332f1884ef9e/raw/d583353cde40462ccb799352d64ba440dca44ab7/us-states.json")
     .then(function (usa) {
-      g3= frame_init("area1")
-      g4= frame_init("area2")
-      g5= frame_init("area3")
-      g6= frame_init("area4")
-      g7= frame_init("area5")
-      g8= frame_init("area6")
+      var g3= frame_init("area1")
+      var g4= frame_init("area2")
+      var g5= frame_init("area3")
+      var g6= frame_init("area4")
+      var g7= frame_init("area5")
+      var g8= frame_init("area6")
       
 
       drawUsa(usa, data);
@@ -24,7 +66,7 @@ d3.csv("data/NBA.csv", d3.autoType).then(function (data) {
     .then(function () {});
 });
 
-function draw_scatter() {}
+
 
 /*
 

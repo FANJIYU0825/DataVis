@@ -1,4 +1,24 @@
-function drawUsa(Usa, data) {
+
+const FWith = 800,
+FHeight = 400;
+const FLeftTopX = 10,
+FLeftTopY = 10;
+const MARGIN = { LEFT: 100, RIGHT: 10, TOP: 10, BOTTOM: 100 };
+const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
+const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
+const svg2 = d3
+  .select("#maparea")
+  .append("svg")
+  .attr("width", FWith)
+  .attr("height", FHeight);
+
+const g2 = svg2
+  .append("g")
+  .attr(
+    "transform",
+    `translate(${FLeftTopX + MARGIN.LEFT}, ${FLeftTopY + MARGIN.TOP})`
+  );
+export function drawUsa(Usa, data) {
   //usmap
   var projection = d3.geoMercator().fitExtent(
     [

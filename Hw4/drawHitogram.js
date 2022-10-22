@@ -1,4 +1,12 @@
-function draw_histamgram(data,g){
+const FWith = 800,
+FHeight = 400;
+const FLeftTopX = 10,
+FLeftTopY = 10;
+const MARGIN = { LEFT: 100, RIGHT: 10, TOP: 10, BOTTOM: 100 };
+const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
+const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
+
+export function draw_histamgram(data,g){
     g.append("text")
     .attr("x", WIDTH / 2)
     .attr("y", HEIGHT + 20)
