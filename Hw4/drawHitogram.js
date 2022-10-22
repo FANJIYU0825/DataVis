@@ -1,7 +1,7 @@
 export function draw_histamgram(data, g, source, WIDTH, HEIGHT,tickv) {
   //add text
   g.append("text")
-    .attr("x", 100)
+    .attr("x", 200)
     .attr("y", 10)
     .attr("font-size", "30px")
     .attr("text-anchor", "middle")
