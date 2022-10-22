@@ -9,4 +9,5 @@ static/tmp.jpg
 *.csv
 =======
 *.csv
+*zip
 >>>>>>> master
