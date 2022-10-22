@@ -18,6 +18,12 @@ const g2 = svg2
     "transform",
     `translate(${FLeftTopX + MARGIN.LEFT}, ${FLeftTopY + MARGIN.TOP})`
   );
+  // count the size of every team and return the value of every team lengh
+  function Num_Player(data,teamID){
+
+    var team =d3.group(data,d=>d.team_abbreviation)
+    return team.get(teamID).length
+ }
 export function drawUsa(Usa, data) {
   //usmap
   var projection = d3.geoMercator().fitExtent(
@@ -29,7 +35,7 @@ export function drawUsa(Usa, data) {
   );
 
   var geoGenerator = d3.geoPath().projection(projection);
-
+  var circlescale =d3.scaleLinear().domain([0,8]).range([0,8])
   g2.selectAll("path")
     .data(Usa.features)
     .enter()
@@ -58,12 +64,17 @@ export function drawUsa(Usa, data) {
       .text(function (d) {
         return d.team_abbreviation;
       });
-
+    
     g2.append("circle")
       .attr("id", "citycircle")
       .attr("cx", projection([d.lon, d.lat])[0])
       .attr("cy", projection([d.lon, d.lat])[1])
-      .attr("fill", "red")
-      .attr("r", 10);
+      .attr("fill", "#ba000a")
+      .style("opacity", 0.05)
+    
+      .attr("r",
+  
+       circlescale( Num_Player(data,d.team_abbreviation))
+      );
   });
 }
