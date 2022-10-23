@@ -40,6 +40,7 @@ var g5 = frame_init("area3");
 var g6 = frame_init("area4");
 var g7 = frame_init("area5");
 var g8 = frame_init("area6");
+
 function frame_init(area) {
   const svg = d3
     .select("#" + area + "")
@@ -70,13 +71,12 @@ d3.csv(
       draw_scatt(data, g1);
       draw_histamgram(data, g3, "pts", FHeight, HEIGHT,40);
       draw_histamgram(data, g4, "reb", FHeight, HEIGHT,30);
-      draw_histamgram(data, g5, "ast", FHeight, HEIGHT,30);
-      draw_histamgram(data, g6, "age", FHeight, HEIGHT,30);
-      draw_histamgram(data, g7, "gp", FHeight, HEIGHT,40);
+      draw_histamgram(data, g5, "ast", FHeight, HEIGHT,50);
+      draw_histamgram(data, g6, "age", FHeight, HEIGHT,20);
+      draw_histamgram(data, g7, "gp", FHeight, HEIGHT,30);
       draw_histamgram(data, g8, "draft_number", FHeight, HEIGHT,30);
-    })
-    .then(function () {})
-    .then(function () {});
+    });
+  
 });
 
 /*

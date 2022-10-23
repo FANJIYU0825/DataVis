@@ -1,5 +1,6 @@
 export function draw_histamgram(data, g, source, WIDTH, HEIGHT,tickv) {
   //add text
+  g.append("input")
   g.append("text")
     .attr("x", 200)
     .attr("y", 10)
@@ -8,10 +9,16 @@ export function draw_histamgram(data, g, source, WIDTH, HEIGHT,tickv) {
     .text(source);
 
   //ycale
-
+  
+  if (source =='pts'){
+    var ydomainMax=40
+    
+  }else{
+    var ydomainMax=d3.max(data, (d) => d.draft_number)
+  }
   const yscale = d3
     .scaleLinear()
-    .domain([d3.min(data, (d) => d.draft_number), 40])
+    .domain([d3.min(data, (d) => d.draft_number),ydomainMax])
     .range([HEIGHT, 0]);
   //xsclae
   const xscale = d3
