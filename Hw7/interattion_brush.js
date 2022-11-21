@@ -1,4 +1,5 @@
 import { drawUsa } from "./drawmap.js";
+import { drawUsa2 } from "./drawmap.js";
 // import {frame_init} from './init.js'
 import { draw_scatt } from "./drawscatter.js";
 import { draw_histamgram } from "./drawHitogram.js";
@@ -75,7 +76,7 @@ export function interactoin_inone(data, usa, g) {
     })
     .on("end", () => {
       if (brush_parameter.length >= 1) {
-        drawUsa(usa, brush_parameter, g2, WIDTH, HEIGHT);
+        drawUsa2(usa, brush_parameter, g2, WIDTH, HEIGHT,'brush');
         draw_histamgram(brush_parameter, g3, "pts", FHeight, HEIGHT, 40);
         draw_histamgram(brush_parameter, g4, "reb", FHeight, HEIGHT, 30);
         draw_histamgram(brush_parameter, g5, "ast", FHeight, HEIGHT, 50);
@@ -90,6 +91,7 @@ export function interactoin_inone(data, usa, g) {
           30
         );
       }else{
+        drawUsa2(usa, data, g2, WIDTH, HEIGHT,'brush');
         draw_histamgram(data, g3, "pts", FHeight, HEIGHT, 40);
         draw_histamgram(data, g4, "reb", FHeight, HEIGHT, 30);
         draw_histamgram(data, g5, "ast", FHeight, HEIGHT, 50);
