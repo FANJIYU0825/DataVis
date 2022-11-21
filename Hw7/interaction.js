@@ -5,6 +5,11 @@ export function isbrushed(coords, cx, cy) {
     y1 = coords[1][1];
   return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
 }
+export function isbrushedX(coords, cx, cy) {
+  var x0 =coords[0],
+    y0 = coords[1];
+  return cx <=x0  && cy<= y0;
+}
 
 function endbrushed() {
   // bars

@@ -60,7 +60,7 @@ export function draw_histamgram(data, g, source, WIDTH, HEIGHT, tickv) {
   var rect = g
     .selectAll("rect")
     .data(bins)
-    // .enter()
+    
     .join('rect')
     // .append("rect")
     .attr("x", 1)
@@ -74,6 +74,6 @@ export function draw_histamgram(data, g, source, WIDTH, HEIGHT, tickv) {
       return HEIGHT - yscale(d.length);
     })
     .style("fill", "#69b3a2");
-  // selectbar(rect);
-  
+  selectbar(rect);
+  return {'g':g,'rect':rect,'xscale':xscale,'yscale':yscale}
 }

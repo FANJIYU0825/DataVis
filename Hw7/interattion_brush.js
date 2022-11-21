@@ -22,7 +22,7 @@ export function interactoin_inone(data, usa, g) {
   var g6 = g[5];
   var g7 = g[6];
   var g8 = g[7];
-  drawUsa(usa, data, g2, WIDTH, HEIGHT);
+  var mapelement=drawUsa(usa, data, g2, WIDTH, HEIGHT);
   var scale = draw_scatt(data, g1);
 
   draw_histamgram(data, g3, "pts", FHeight, HEIGHT, 40);
@@ -76,7 +76,7 @@ export function interactoin_inone(data, usa, g) {
     })
     .on("end", () => {
       if (brush_parameter.length >= 1) {
-        drawUsa2(usa, brush_parameter, g2, WIDTH, HEIGHT,'brush');
+        
         draw_histamgram(brush_parameter, g3, "pts", FHeight, HEIGHT, 40);
         draw_histamgram(brush_parameter, g4, "reb", FHeight, HEIGHT, 30);
         draw_histamgram(brush_parameter, g5, "ast", FHeight, HEIGHT, 50);
@@ -90,8 +90,9 @@ export function interactoin_inone(data, usa, g) {
           HEIGHT,
           30
         );
+        drawUsa2(usa, brush_parameter, g2, WIDTH, HEIGHT,mapelement);
       }else{
-        drawUsa2(usa, data, g2, WIDTH, HEIGHT,'brush');
+        // drawUsa2(usa, data, g2, WIDTH, HEIGHT,'brush');
         draw_histamgram(data, g3, "pts", FHeight, HEIGHT, 40);
         draw_histamgram(data, g4, "reb", FHeight, HEIGHT, 30);
         draw_histamgram(data, g5, "ast", FHeight, HEIGHT, 50);
@@ -106,4 +107,5 @@ export function interactoin_inone(data, usa, g) {
   //   }
   var circleG = scale["circleG"];
   circleG.call(brush);
+  
 }
