@@ -30,7 +30,7 @@ export function drawUsa(Usa, data, g, WIDTH, HEIGHT) {
 
   var geoGenerator = d3.geoPath().projection(projection);
   var circlescale = d3.scaleLinear().domain([0, 8]).range([0, 8]);
-  g.selectAll("path")
+  var map=g.selectAll("path")
     .data(Usa.features)
     .enter()
     .append("path")
@@ -59,7 +59,8 @@ export function drawUsa(Usa, data, g, WIDTH, HEIGHT) {
         return d.team_abbreviation;
       });
 
-    g.append("circle")
+    g
+    .append("circle")
       .attr("id", "citycircle")
       .attr("cx", projection([d.lon, d.lat])[0])
       .attr("cy", projection([d.lon, d.lat])[1])

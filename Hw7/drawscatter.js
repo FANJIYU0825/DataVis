@@ -45,7 +45,7 @@ export function draw_scatt(data, g, filter) {
     .domain([1, 2, 3])
     .range(["green", "red", "blue"]);
   // legendColor
-  var circle = d3.symbol().type(d3.symbolCircle)();
+  var symbolCircle= d3.symbol().type(d3.symbolCircle)();
 
   var legendboard = d3
     .scaleOrdinal()
@@ -74,7 +74,7 @@ export function draw_scatt(data, g, filter) {
  
   var legendLinear = d3
     .legendColor()
-    .shape("path",circle)
+    .shape("path",symbolCircle)
     .orient("vertical")
     .scale(legendboard);
   //legendLinear generate
@@ -113,11 +113,11 @@ export function draw_scatt(data, g, filter) {
       }
     });
     
-    circleG.call(brush)
+    // circleG.call(brush)
     
     circles.call(tip)
     circles.on("mousemove", tip.show).on("mouseout", tip.hide);
-    return {'xscale':xscale,"yscale":yscale,'circle':circle,'circleG':circleG}
+    return {'xscale':xscale,"yscale":yscale,'circle':circles,'circleG':circleG}
 }
 
 
