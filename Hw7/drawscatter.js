@@ -140,19 +140,19 @@ export function draw_scatt1(data, g, filter) {
   // yscale
   const yscale = d3
     .scaleLinear()
-    .domain([d3.min(data, (d) => d.umapY), d3.max(data, (d) => d.umapY)])
+    .domain([d3.min(filter, (d) => d.umapY), d3.max(filter, (d) => d.umapY)])
     .range([HEIGHT, 0]);
   //xscale
   const xscale = d3
     .scaleLinear()
-    .domain([d3.min(data, (d) => d.umapX), d3.max(data, (d) => d.umapX)])
+    .domain([d3.min(filter, (d) => d.umapX), d3.max(filter, (d) => d.umapX)])
     .range([0, HEIGHT]);
 
   // circle size change by the mean
   const radiusscale = d3
     .scaleLinear()
-    .domain([d3.min(data, (d) => d.ptsNorm), d3.max(data, (d) => d.ptsNorm)])
-    .range([0, d3.mean(data, (d) => d.umapX + d.umapY)]);
+    .domain([d3.min(filter, (d) => d.ptsNorm), d3.max(filter, (d) => d.ptsNorm)])
+    .range([0, d3.mean(filter, (d) => d.umapX + d.umapY)]);
 
   // color change compare by three norm
   const colorscale = d3

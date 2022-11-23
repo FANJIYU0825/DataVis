@@ -1,9 +1,12 @@
 import { drawUsa } from "./drawmap.js";
+import { drawUsa2 } from "./drawmap.js";
 // import {frame_init} from './init.js'
 import { draw_scatt } from "./drawscatter.js";
+import { draw_scatt1 } from "./drawscatter.js";
 import { draw_histamgram } from "./drawHitogram.js";
-import { interactoin_inone} from "./interattion_brush.js";
-
+import { top_tip } from "./interaction.js";
+import { isbrushed } from "./interaction.js";
+import { isbrushedX } from "./interaction.js";
 const FWith = 800,
   FHeight = 400;
 const FLeftTopX = 10,
@@ -59,7 +62,7 @@ function frame_init(area) {
     );
   return g;
 }
-var g_all = [g1,g2,g3,g4,g5,g6,g7,g8]
+
 d3.csv(
   "https://gist.githubusercontent.com/FANJIYU0825/116526c0af36be0866e7a99a7668e28c/raw/4269f88eba4588f5cb60b3a931e377d408422a6b/NBA.csv",
   d3.autoType
@@ -67,8 +70,163 @@ d3.csv(
   d3.json(
     "https://gist.githubusercontent.com/FANJIYU0825/11c93f8bf083adf57ed4332f1884ef9e/raw/d583353cde40462ccb799352d64ba440dca44ab7/us-states.json"
   ).then(function (usa) {
-    interactoin_inone(data,usa,g_all)
-    
+    var mapelement = drawUsa(usa, data, g2, WIDTH, HEIGHT, 1);
+    var scale = draw_scatt(data, g1);
+
+    var scales_hispts = draw_histamgram(data, g3, "pts", FHeight, HEIGHT, 40);
+    var scales_hisreb = draw_histamgram(data, g4, "reb", FHeight, HEIGHT, 30);
+    var scales_hisast = draw_histamgram(data, g5, "ast", FHeight, HEIGHT, 50);
+    var scales_hisage = draw_histamgram(data, g6, "age", FHeight, HEIGHT, 20);
+    var scales_hisgp = draw_histamgram(data, g7, "gp", FHeight, HEIGHT, 30);
+    var scales_hisdraft_numbe = draw_histamgram(
+      data,
+      g8,
+      "draft_number",
+      FHeight,
+      HEIGHT,
+      30
+    );
+
+    var tip = top_tip();
+    var circle = scale["circle"];
+    var brush_parameter = [];
+    var brush = d3
+
+      .brush()
+      .extent([
+        [0, 0],
+        [300, 300],
+      ])
+      .on("start", function () {
+        brush_parameter = [];
+        var extent = d3.event.selection;
+        console.log(extent);
+        circle.classed("selected", (d) => {
+          var selected = isbrushed(
+            extent,
+            scale["xscale"](d.umapX),
+            scale["yscale"](d.umapY)
+          );
+
+          if (selected == true) brush_parameter.push(d);
+
+          console.log("okay");
+        });
+      })
+      .on("brush", () => {
+        brush_parameter = [];
+        var extent = d3.event.selection;
+        console.log(extent);
+        circle.classed("selected", (d) => {
+          var selected = isbrushed(
+            extent,
+            scale["xscale"](d.umapX),
+            scale["yscale"](d.umapY)
+          );
+
+          if (selected == true) brush_parameter.push(d);
+
+          console.log("okay");
+        });
+      })
+      .on("end", () => {
+        if (brush_parameter.length >= 1) {
+          draw_histamgram(brush_parameter, g3, "pts", FHeight, HEIGHT, 40, 1);
+          draw_histamgram(brush_parameter, g4, "reb", FHeight, HEIGHT, 30, 1);
+          draw_histamgram(brush_parameter, g5, "ast", FHeight, HEIGHT, 50, 1);
+          draw_histamgram(brush_parameter, g6, "age", FHeight, HEIGHT, 20, 1);
+          draw_histamgram(brush_parameter, g7, "gp", FHeight, HEIGHT, 30, 1);
+          draw_histamgram(
+            brush_parameter,
+            g8,
+            "draft_number",
+            FHeight,
+            HEIGHT,
+            30
+          );
+          // drawUsa(usa, brush_parameter, g2, WIDTH, HEIGHT, 0);
+
+          drawUsa2(usa, brush_parameter, g2, WIDTH, HEIGHT, 1);
+        } else {
+          // drawUsa2(usa, data, g2, WIDTH, HEIGHT,'brush');
+          draw_histamgram(data, g3, "pts", FHeight, HEIGHT, 40);
+          draw_histamgram(data, g4, "reb", FHeight, HEIGHT, 30);
+          draw_histamgram(data, g5, "ast", FHeight, HEIGHT, 50);
+          draw_histamgram(data, g6, "age", FHeight, HEIGHT, 20);
+          draw_histamgram(data, g7, "gp", FHeight, HEIGHT, 30);
+          draw_histamgram(data, g8, "draft_number", FHeight, HEIGHT, 30);
+        }
+      });
+
+    var circleG = scale["circleG"];
+    circleG.call(brush);
+
+    var hitpts = scales_hispts["g"].append("g");
+    var hitreb = scales_hisreb["g"].append("g");
+    var hitast = scales_hisast["g"].append("g");
+    var hitage = scales_hisage["g"].append("g");
+    var hitgp = scales_hisgp["g"].append("g");
+    var hitdraft_numbe = scales_hisdraft_numbe["g"].append("g");
+    var circhis = scales_hispts["rect"].append("g");
+    var brushX_parameter = [];
+    var brushX = d3
+
+      .brushX()
+      .extent([
+        [0, 100],
+        [300, 300],
+      ])
+
+      .on("brush", () => {
+        brushX_parameter = [];
+        var extent = d3.event.selection;
+        console.log(extent);
+        circhis.classed("selected", (d) => {
+          var selected = isbrushedX(
+            extent,
+            scales_hispts["xscale"](d.x0),
+            scales_hispts["xscale"](d.x1)
+          );
+
+          if (selected == true) {
+            scales_hispts["xscale"](d.x0);
+            scales_hispts["xscale"](d.x1);
+            brushX_parameter.push(d);
+            console.log("okay");
+          }
+        });
+      })
+      .on("end", () => {
+        g1.selectAll(".NormScatter").remove();
+        g2.selectAll('.citycircle').remove()
+        brushX_parameter.forEach((d) => {
+          
+          draw_scatt1(d, g1,data);
+          drawUsa(usa, d, g2, WIDTH, HEIGHT, 1);
+        });
+      });
+
+    hitpts.call(
+      brushX // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+    );
+    hitreb.call(
+      brushX // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+    );
+    hitast.call(
+      brushX // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+    );
+    hitage.call(
+      brushX // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+    );
+    hitgp.call(
+      brushX // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+    );
+    hitdraft_numbe.call(
+      brushX // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+    );
+  });
+  d3.select("button").on("click", function () {
+    window.location = window.location.href;
   });
 });
 
