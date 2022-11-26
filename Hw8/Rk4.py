@@ -80,20 +80,20 @@ def find_cell_seed(x,y):
        p2=[int(x)+1,int(y)]
        p3=[int(x)+1,int(y)+1]
        p4=[int(x),int(y)+1]
-    #    return p1,p2,p3,p4
+       return p1,p2,p3,p4
         
     elif isinstance(x, float)and y.is_integer():
         p1=[int(x),int(y)]
         p2=[int(x)+1,int(y)]
         p3=[int(x)+1,int(y)]
         p4=[int(x),int(y)]
-        # return p1,p2,p3,p4
+        return p1,p2,p3,p4
     elif isinstance(y, float)and x.is_integer():
         p1=[int(x),int(y)]
         p2=[int(x),int(y)]
         p3=[int(x),int(y)+1]
         p4=[int(x),int(y)+1]
-    return p1,p2,p3,p4
+        return p1,p2,p3,p4
         
 
 
@@ -118,16 +118,15 @@ def particleTrace(seed, t, steps):
         u=getDataVector(int(x),int(y))[0]
         v=getDataVector(int(x),int(y))[1]
     else:
-        # print("float")
+        # print("float") 
+        #we get the cell value  
         p1,p2,p3,p4 = find_cell_seed(x,y)
-   
-        # print("fourp",p1,p2,p3,p4 )
+        # we change the four point to vector 
         pv1 =getDataVector(int(p1[0]),int(p1[1]))
         pv2 =getDataVector(int(p2[0]),int(p2[1]))
         pv3 =getDataVector(int(p3[0]),int(p3[1]))
         pv4 =getDataVector(int(p4[0]),int(p4[1]))
-        # print("fourv",pv1,pv2,pv3,pv4)
-        # R1=getinterpolation(x0 = p1[0],y0=pv1[0],x1= p1[1],y1= pv1[1],datavalue=x)
+        # we interpolation to find out point of seed x and y
         her_x01=getinterpolation(x0 = p1[0],y0=pv1[0],x1= p2[0],y1= pv2[0],datavalue=x)
         her_x02=getinterpolation(x0 = p4[0],y0=pv4[0],x1= p3[0],y1= pv3[0],datavalue=x)
         her_y01=getinterpolation(x0 = p1[1],y0=pv1[1],x1= p3[1],y1= pv3[1],datavalue=y)
